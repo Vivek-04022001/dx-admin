@@ -120,9 +120,9 @@ class _SplashScreenState extends State<SplashScreen>
             // Tagline
             FadeTransition(
               opacity: _animation,
-              child: const Text(
-                'Your Ultimate Grocery Management',
-                style: TextStyle(
+              child: Text(
+                AppConfig.appTagline,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
                   fontStyle: FontStyle.italic,

@@ -1,11 +1,11 @@
 {
-    "name": "dxmart_admin",
-    "short_name": "dxmart_admin",
+    "name": "Kritika Mart",
+    "short_name": "Kritika Mart",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Your Ultimate Grocery Management System",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
