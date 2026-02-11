@@ -1,3 +1,4 @@
+import 'package:dxmart_admin/config/app_config.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -138,7 +139,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
 
       if (orderDate != null) {
-        final orderDay = DateTime(orderDate.year, orderDate.month, orderDate.day);
+        final orderDay = DateTime(
+          orderDate.year,
+          orderDate.month,
+          orderDate.day,
+        );
 
         // ✅ Today's sales (skip cancelled already above)
         if (orderDay == today) {
@@ -256,7 +261,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         // Calculate daily averages
         final daysInMonth = DateTime(thisYear, thisMonth + 1, 0).day;
         final avgDailyRevenue = monthlyRevenue / daysInMonth;
-        final avgOrderValue = monthlyOrders > 0 ? monthlyRevenue / monthlyOrders : 0;
+        final avgOrderValue = monthlyOrders > 0
+            ? monthlyRevenue / monthlyOrders
+            : 0;
 
         return AlertDialog(
           title: Row(
@@ -279,9 +286,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Monthly Summary
-
-
-
                 SizedBox(height: 15),
 
                 // Performance Metrics
@@ -306,7 +310,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Icons.people,
                       AppColors.successColor,
                     ),
-
                   ],
                 ),
               ],
@@ -329,7 +332,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
               ),
-              child: Text('Export Report', style: TextStyle(color: Colors.white)),
+              child: Text(
+                'Export Report',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         );
@@ -337,7 +343,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildReportCard({required String title, required List<Widget> children}) {
+  Widget _buildReportCard({
+    required String title,
+    required List<Widget> children,
+  }) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -387,22 +396,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Container(
                 width: 8,
                 height: 8,
-                decoration: BoxDecoration(
-                  color: color,
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
               ),
               SizedBox(width: 8),
-              Text(label, style: TextStyle(color: AppColors.secondaryTextColor)),
+              Text(
+                label,
+                style: TextStyle(color: AppColors.secondaryTextColor),
+              ),
             ],
           ),
-          Text(value, style: TextStyle(fontWeight: FontWeight.bold, color: color)),
+          Text(
+            value,
+            style: TextStyle(fontWeight: FontWeight.bold, color: color),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildMetricRow(String label, String value, IconData icon, Color color) {
+  Widget _buildMetricRow(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -410,7 +427,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Icon(icon, size: 20, color: color),
           SizedBox(width: 10),
           Expanded(
-            child: Text(label, style: TextStyle(color: AppColors.secondaryTextColor)),
+            child: Text(
+              label,
+              style: TextStyle(color: AppColors.secondaryTextColor),
+            ),
           ),
           Text(
             value,
@@ -427,10 +447,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: AppColors.successColor,
-      ),
+      SnackBar(content: Text(message), backgroundColor: AppColors.successColor),
     );
   }
 
@@ -448,24 +465,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Dashboard',
-                      style: GoogleFonts.poppins(
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF2C3E50))),
+                  Text(
+                    'Dashboard',
+                    style: GoogleFonts.poppins(
+                      fontSize: 28.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF2C3E50),
+                    ),
+                  ),
                   SizedBox(height: 4.h),
-                  Text('DxMart - Admin Panel',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey)),
+                  Text(
+                    '${AppConfig.appName} - Admin Panel',
+                    style: GoogleFonts.poppins(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ],
               ),
               Row(
                 children: [
                   // ✅ Changed from notifications icon to revenue report
                   IconButton(
-                    icon: Icon(Icons.bar_chart, size: 26.sp, color: const Color(0xFF2C3E50)),
+                    icon: Icon(
+                      Icons.bar_chart,
+                      size: 26.sp,
+                      color: const Color(0xFF2C3E50),
+                    ),
                     onPressed: _showRevenueReport,
                     tooltip: 'Revenue Report',
                   ),
@@ -483,21 +510,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           // Summary Cards
           isLoading
-              ? Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                )
               : GridView.count(
-            crossAxisCount: 4,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: 20.w,
-            mainAxisSpacing: 20.h,
-            childAspectRatio: 1.7.w,
-            children: [
-              _buildSummaryCard('Total Orders', totalOrders.toString(), Icons.shopping_cart, const Color(0xFF0F969c)),
-              _buildSummaryCard("Today's Sales", '₹${todaySales.toStringAsFixed(2)}', Icons.currency_rupee, const Color(0xFF6A67CE)),
-              _buildSummaryCard('Total Users','' +totalUsers.toString(), Icons.people, const Color(0xFFFFA62B)),
-              _buildSummaryCard('Pending Order', pendingOrders.toString(), Icons.pending_actions, const Color(0xFFFF6B6B)),
-            ],
-          ),
+                  crossAxisCount: 4,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisSpacing: 20.w,
+                  mainAxisSpacing: 20.h,
+                  childAspectRatio: 1.7.w,
+                  children: [
+                    _buildSummaryCard(
+                      'Total Orders',
+                      totalOrders.toString(),
+                      Icons.shopping_cart,
+                      const Color(0xFF0F969c),
+                    ),
+                    _buildSummaryCard(
+                      "Today's Sales",
+                      '₹${todaySales.toStringAsFixed(2)}',
+                      Icons.currency_rupee,
+                      const Color(0xFF6A67CE),
+                    ),
+                    _buildSummaryCard(
+                      'Total Users',
+                      '$totalUsers',
+                      Icons.people,
+                      const Color(0xFFFFA62B),
+                    ),
+                    _buildSummaryCard(
+                      'Pending Order',
+                      pendingOrders.toString(),
+                      Icons.pending_actions,
+                      const Color(0xFFFF6B6B),
+                    ),
+                  ],
+                ),
 
           const SizedBox(height: 24),
 
@@ -533,43 +584,102 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                                   // Start from 6 days ago to today
                                   final now = DateTime.now();
-                                  final targetDay = now.subtract(Duration(days: 6 - value.toInt()));
+                                  final targetDay = now.subtract(
+                                    Duration(days: 6 - value.toInt()),
+                                  );
 
                                   // Map weekday number (1 = Mon, 7 = Sun)
-                                  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                                  const dayNames = [
+                                    'Mon',
+                                    'Tue',
+                                    'Wed',
+                                    'Thu',
+                                    'Fri',
+                                    'Sat',
+                                    'Sun',
+                                  ];
 
                                   return Text(
-                                    dayNames[targetDay.weekday - 1], // ✅ Correct mapping
+                                    dayNames[targetDay.weekday -
+                                        1], // ✅ Correct mapping
                                     style: style,
                                   );
                                 },
-
                               ),
                             ),
                           ),
                           borderData: FlBorderData(show: false),
                           barGroups: [
-                            BarChartGroupData(x: 0, barRods: [
-                              BarChartRodData(toY: weeklySales[0], color: Color(0xFF0F969c), width: 18),
-                            ]),
-                            BarChartGroupData(x: 1, barRods: [
-                              BarChartRodData(toY: weeklySales[1], color: Color(0xFF0F969c), width: 18),
-                            ]),
-                            BarChartGroupData(x: 2, barRods: [
-                              BarChartRodData(toY: weeklySales[2], color: Color(0xFF0F969c), width: 18),
-                            ]),
-                            BarChartGroupData(x: 3, barRods: [
-                              BarChartRodData(toY: weeklySales[3], color: Color(0xFF0F969c), width: 18),
-                            ]),
-                            BarChartGroupData(x: 4, barRods: [
-                              BarChartRodData(toY: weeklySales[4], color: Color(0xFF0F969c), width: 18),
-                            ]),
-                            BarChartGroupData(x: 5, barRods: [
-                              BarChartRodData(toY: weeklySales[5], color: Color(0xFF0F969c), width: 18),
-                            ]),
-                            BarChartGroupData(x: 6, barRods: [
-                              BarChartRodData(toY: weeklySales[6], color: Color(0xFF0F969c), width: 18),
-                            ]),
+                            BarChartGroupData(
+                              x: 0,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[0],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
+                            BarChartGroupData(
+                              x: 1,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[1],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
+                            BarChartGroupData(
+                              x: 2,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[2],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
+                            BarChartGroupData(
+                              x: 3,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[3],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
+                            BarChartGroupData(
+                              x: 4,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[4],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
+                            BarChartGroupData(
+                              x: 5,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[5],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
+                            BarChartGroupData(
+                              x: 6,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: weeklySales[6],
+                                  color: Color(0xFF0F969c),
+                                  width: 18,
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -592,19 +702,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           childAspectRatio: 1.5,
                           children: [
-                            _buildActionButton(Icons.category, 'Add Category', const Color(0xFF0F969c),(){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MainCategory()));
-                            }),
-                            _buildActionButton(Icons.shopping_cart, 'Add Product', const Color(0xFF6A67CE),(){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductManagementScreen()));
-                            }),
-                            _buildActionButton(Icons.inventory_2, 'Stock', const Color(0xFFFF6B6B),(){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>StockManagementScreen()));
-                            }),
+                            _buildActionButton(
+                              Icons.category,
+                              'Add Category',
+                              const Color(0xFF0F969c),
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MainCategory(),
+                                  ),
+                                );
+                              },
+                            ),
+                            _buildActionButton(
+                              Icons.shopping_cart,
+                              'Add Product',
+                              const Color(0xFF6A67CE),
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProductManagementScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                            _buildActionButton(
+                              Icons.inventory_2,
+                              'Stock',
+                              const Color(0xFFFF6B6B),
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        StockManagementScreen(),
+                                  ),
+                                );
+                              },
+                            ),
                             // ✅ Changed from Send Notification to Revenue Report
-                            _buildActionButton(Icons.bar_chart, 'Revenue Report', const Color(0xFF34C759),(){
-                              _showRevenueReport();
-                            }),
+                            _buildActionButton(
+                              Icons.bar_chart,
+                              'Revenue Report',
+                              const Color(0xFF34C759),
+                              () {
+                                _showRevenueReport();
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -641,13 +788,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 Text(
                   'Recent Orders',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderManagementScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrderManagementScreen(),
+                      ),
+                    );
                   },
                   child: const Text('View All'),
                 ),
@@ -656,7 +808,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(height: 16),
 
             if (isLoading)
-              Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
+              Center(
+                child: CircularProgressIndicator(color: AppColors.primaryColor),
+              )
             else if (recentOrders.isEmpty)
               Center(
                 child: Text(
@@ -718,7 +872,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                               DataCell(
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: statusColor.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(20),
@@ -764,7 +921,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  Widget _buildActionButton(IconData icon, String label, Color color, VoidCallback onTap) {
+  Widget _buildActionButton(
+    IconData icon,
+    String label,
+    Color color,
+    VoidCallback onTap,
+  ) {
     return Container(
       margin: EdgeInsets.all(8.w),
       child: InkWell(
@@ -798,7 +960,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildSummaryCard(String title, String value, IconData icon, Color color) {
+  Widget _buildSummaryCard(
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -809,7 +976,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             blurRadius: 12.r,
             spreadRadius: 4.r,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
         gradient: LinearGradient(
           colors: [color.withOpacity(0.15), color.withOpacity(0.05)],
@@ -831,13 +998,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Icon(icon, size: 24.sp, color: color),
           ),
           SizedBox(height: 12.h),
-          Text(title,
-              style: GoogleFonts.poppins(
-                  fontSize: 12.sp, color: Colors.black54, fontWeight: FontWeight.w500)),
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontSize: 12.sp,
+              color: Colors.black54,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           SizedBox(height: 4.h),
-          Text(value,
-              style: GoogleFonts.poppins(
-                  fontSize: 20.sp, fontWeight: FontWeight.bold, color: const Color(0xFF2C3E50))),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF2C3E50),
+            ),
+          ),
         ],
       ),
     );
@@ -850,9 +1027,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }) {
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r)),
       child: Padding(
         padding: EdgeInsets.all(16.w),
         child: Column(
@@ -863,21 +1038,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ? MainAxisAlignment.spaceBetween
                   : MainAxisAlignment.start,
               children: [
-                Text(title,
-                    style: GoogleFonts.poppins(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF2C3E50))),
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF2C3E50),
+                  ),
+                ),
                 if (actionText != null)
-                  Text(actionText,
-                      style: GoogleFonts.poppins(
-                          color: const Color(0xFF0F969c),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13.sp)),
+                  Text(
+                    actionText,
+                    style: GoogleFonts.poppins(
+                      color: const Color(0xFF0F969c),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13.sp,
+                    ),
+                  ),
               ],
             ),
             SizedBox(height: 12.h),
-            ...children
+            ...children,
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dxmart_admin/config/app_config.dart';
+import 'package:dxmart_admin/config/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +16,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   late Animation<Offset> _textAnimation;
@@ -24,12 +27,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     super.initState();
 
     // Status Bar & Navigation Bar Settings
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
 
     // Animation initialization
     _controller = AnimationController(
@@ -37,18 +42,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       vsync: this,
     );
 
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
     _textAnimation = Tween<Offset>(
       begin: const Offset(0, 0.5),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOut,
-    ));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward();
 
@@ -95,48 +94,28 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             // Animated Logo
             ScaleTransition(
               scale: _animation,
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.shade100,
-                      blurRadius: 15,
-                      spreadRadius: 5,
-                    )
-                  ],
-                ),
-                child: const Icon(
-                  Icons.shopping_basket_outlined,
-                  color: Colors.white,
-                  size: 60,
-                ),
-              ),
+              child: Image.asset(AppImages.logo, width: 300, height: 300),
             ),
 
             const SizedBox(height: 30),
 
             // Animated Text
-            SlideTransition(
-              position: _textAnimation,
-              child: FadeTransition(
-                opacity: _animation,
-                child:  Text(
-                  'Dx MART',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 10),
+            // SlideTransition(
+            //   position: _textAnimation,
+            //   child: FadeTransition(
+            //     opacity: _animation,
+            //     child: Text(
+            //       AppConfig.appName,
+            //       style: TextStyle(
+            //         fontSize: 36,
+            //         fontWeight: FontWeight.bold,
+            //         color: AppColors.primaryColor,
+            //         letterSpacing: 2.0,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: 10),
 
             // Tagline
             FadeTransition(

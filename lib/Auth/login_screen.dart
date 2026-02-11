@@ -1,3 +1,4 @@
+import 'package:dxmart_admin/config/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -110,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: EdgeInsets.only(left: 40.w, right: 40.w),
           child: Center(
-            child: Container(
+            child: SizedBox(
               width: 600.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,8 +211,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
                               }
-                              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                  .hasMatch(value)) {
+                              if (!RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                              ).hasMatch(value)) {
                                 return 'Please enter a valid email';
                               }
                               return null;
@@ -293,7 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               Theme(
                                 data: ThemeData(
-                                  unselectedWidgetColor: AppColors.hintTextColor,
+                                  unselectedWidgetColor:
+                                      AppColors.hintTextColor,
                                 ),
                                 child: Checkbox(
                                   value: _rememberMe,
@@ -370,20 +373,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               child: _isLoading
                                   ? SizedBox(
-                                width: 24.w,
-                                height: 24.w,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2.w,
-                                ),
-                              )
+                                      width: 24.w,
+                                      height: 24.w,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2.w,
+                                      ),
+                                    )
                                   : Text(
-                                'LOGIN',
-                                style: GoogleFonts.jost(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                                      'LOGIN',
+                                      style: GoogleFonts.jost(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                             ),
                           ),
                         ],
@@ -396,7 +399,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Footer text
                   Center(
                     child: Text(
-                      '© 2025 Dx Mart. All rights reserved.',
+                      '© ${DateTime.now().year} ${AppConfig.appName}. All rights reserved.',
                       style: GoogleFonts.jost(
                         color: AppColors.secondaryTextColor,
                         fontSize: 12.sp,

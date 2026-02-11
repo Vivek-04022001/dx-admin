@@ -1,8 +1,8 @@
+import 'package:dxmart_admin/config/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'SplashScreen/splashScreen.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(
-          title: 'DxMart',
+          title: AppConfig.appName,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
